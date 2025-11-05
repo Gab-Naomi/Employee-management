@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Registration</title>
+
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/form.css' %}">
+</head>
+<body>
+<!-- Navigation/Header -->
+<header class="navbar">
+    <h1>EMPLOYEE FORM</h1>
+    <nav>
+        <a href="{% url 'employee_form' %}">Add Employee</a>
+        {% if user.is_authenticated and user.is_superuser %}
+            <a href="{% url 'view_records' %}">View Records</a>
+            <a href="{% url 'logout' %}">Logout ({{ user.username }})</a>
+        {% else %}
+            <a href="{% url 'login' %}">View Records</a>
+        {% endif %}
+    </nav>
+</header>
+
+  <!-- Main Form -->
+  <main>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <h2>Employee Registration Form</h2>
+
+      <!-- Personal Information Section -->
+      <div class="form-group">
+        <label for="profile_picture">Profile Picture</label>
+        <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
+      </div>
+
+      <label>First Name
+        <input type="text" name="firstname" required> 
+      </label>
+
+      <label>Surname
+        <input type="text" name="surname" required>
+      </label>
+
+      <label>Other Name
+        <input type="text" name="othername"> 
+      </label>
+
+      <label>Employee ID
+        <input type="text" name="employeeid" required> 
+      </label>
+
+      <label>Gender</label>
+      <div class="radio-group">
+        <label><input type="radio" name="gender" value="Male" required> Male</label>
+        <label><input type="radio" name="gender" value="Female" required> Female</label>
+      </div>
+
+      <label>Email
+        <input type="email" name="email" required>
+      </label>
+
+      <label>Contact Number
+        <input type="tel" name="contactnumber" required> 
+      </label>
+
+      <label>Date of Birth
+        <input type="date" name="dob" required>  
+      </label>
+
+      <label>Address
+        <input type="text" name="address" required>
+      </label>
+
+      <!-- Professional Information -->
+      <label>Department
+        <select id="department" name="department" required>
+          <option value="">Select Department</option>
+          <option value="HR">HR</option>
+          <option value="Finance">Finance</option>
+          <option value="IT">IT</option>
+          <option value="Sales">Sales</option>
+          <option value="Marketing">Marketing</option>
+          <option value="Operations">Operations</option>
+          <option value="Customer Service">Customer Service</option> 
+          <option value="Administration">Administration</option>
+          <option value="Research and Development">Research and Development</option>
+          <option value="Legal">Legal</option>
+          <option value="Procurement">Procurement</option>
+          <option value="Logistics">Logistics</option> 
+          <option value="Public Relations">Public Relations</option>
+          <option value="Quality Assurance">Quality Assurance</option>
+          <option value="Training and Development">Training and Development</option>
+          <option value="Health and Safety">Health and Safety</option>
+          <option value="Facilities Management">Facilities Management</option>
+          <option value="Executive Management">Executive Management</option>
+          <option value="Data Analysis">Data Analysis</option>
+          <option value="Content Creation">Content Creation</option>
+          <option value="Social Media">Social Media</option>
+          <option value="Research">Research</option>
+          <option value="Consulting">Consulting</option>
+          <option value="Data Science">Data Science</option>
+          <option value="Internship">Internship</option>
+          <option value="Support">Support</option>
+          <option value="Development">Development</option>
+          <option value="Management">Management</option>
+          <option value="Engineering">Engineering</option>
+          <option value="Accounting">Accounting</option>
+          <option value="Audit">Audit</option>
+          <option value="Customer Relations">Customer Relations</option>
+          <option value="Technical Support">Technical Support</option>
+          <option value="Project Management">Project Management</option>
+          <option value="Business Analysis">Business Analysis</option>
+          <option value="Service Delivery">Service Delivery</option>
+          <option value="Supply Chain">Supply Chain</option>
+          <option value="Coordination">Coordination</option>
+          <option value="Other">Other</option>
+        </select>
+      </label>
+
+      <label>Role
+        <select id="role" name="role" required>
+          <option value="">Select Role</option>
+          <option value="Admin">Admin</option>
+          <option value="Software Engineer">Software Engineer</option>
+          <option value="Accountant">Accountant</option>
+          <option value="HR Manager">HR Manager</option>
+          <option value="Sales Executive">Sales Executive</option>
+          <option value="Marketing Specialist">Marketing Specialist</option>
+          <option value="Customer Support">Customer Support</option>
+          <option value="IT Support">IT Support</option>
+          <option value="Operations Manager">Operations Manager</option>
+          <option value="Cyber Security">Cyber Security</option>
+          <option value="Project Manager">Project Manager</option>
+          <option value="Business Analyst">Business Analyst</option>
+          <option value="Customer Service">Customer Service</option>
+          <option value="Procurement Officer">Procurement Officer</option>
+          <option value="Logistics Coordinator">Logistics Coordinator</option>
+          <option value="Public Relations Officer">Public Relations Officer</option>
+          <option value="Quality Assurance">Quality Assurance</option>
+          <option value="Training Coordinator">Training Coordinator</option>
+          <option value="Health and Safety Officer">Health and Safety Officer</option>
+          <option value="Facilities Manager">Facilities Manager</option>
+          <option value="Executive Assistant">Executive Assistant</option>
+          <option value="Data Analyst">Data Analyst</option>
+          <option value="Content Writer">Content Writer</option>
+          <option value="Social Media Manager">Social Media Manager</option>
+          <option value="Researcher">Researcher</option>
+          <option value="Consultant">Consultant</option>
+          <option value="Data Specialist">Data Specialist</option>
+          <option value="Cleaner">Cleaner</option>
+          <option value="Intern">Intern</option>
+          <option value="Other">Other</option>
+        </select>
+      </label>
+
+      <!-- Location Information -->
+      <label>State
+        <select id="state" name="state" onchange="updateLGA()" required>
+          <option value="">Select State</option>
+          <option value="Abia">Abia</option>
+          <option value="Adamawa">Adamawa</option>
+          <option value="Akwa Ibom">Akwa Ibom</option>
+          <option value="Anambra">Anambra</option>
+          <option value="Bauchi">Bauchi</option>
+          <option value="Bayelsa">Bayelsa</option>
+          <option value="Benue">Benue</option>
+          <option value="Borno">Borno</option>
+          <option value="Cross River">Cross River</option>
+          <option value="Delta">Delta</option>
+          <option value="Ebonyi">Ebonyi</option>
+          <option value="Edo">Edo</option>
+          <option value="Ekiti">Ekiti</option>
+          <option value="Enugu">Enugu</option>
+          <option value="FCT(Abuja)">FCT(Abuja)</option>
+          <option value="Gombe">Gombe</option>
+          <option value="Imo">Imo</option>
+          <option value="Jigawa">Jigawa</option>
+          <option value="Kaduna">Kaduna</option>
+          <option value="Kano">Kano</option>
+          <option value="Katsina">Katsina</option>
+          <option value="Kebbi">Kebbi</option>
+          <option value="Kogi">Kogi</option>
+          <option value="Kwara">Kwara</option>
+          <option value="Lagos">Lagos</option>
+          <option value="Nasarawa">Nasarawa</option>
+          <option value="Niger">Niger</option>
+          <option value="Ogun">Ogun</option>
+          <option value="Ondo">Ondo</option>
+          <option value="Osun">Osun</option>
+          <option value="Oyo">Oyo</option>
+          <option value="Plateau">Plateau</option>
+          <option value="Rivers">Rivers</option>
+          <option value="Sokoto">Sokoto</option>
+          <option value="Taraba">Taraba</option>
+          <option value="Yobe">Yobe</option>
+          <option value="Zamfara">Zamfara</option>
+        </select>
+      </label>
+
+      <label>LGA
+        <select id="lga" name="lga" onchange="updateWard()" required>
+          <option value="">Select LGA</option>
+        </select>
+      </label>
+
+      <label>Ward
+        <select id="ward" name="ward" required>
+          <option value="">Select Ward</option>
+        </select>
+      </label>
+
+      <button type="submit">Submit</button>
+    </form>
+  </main>
+
+  <!-- JavaScript for dynamic dropdowns -->
+  <script>
+    let nigeriaData = null;
+
+    function debugLog(...args) {
+        if (window.console && console.log) console.log(...args);
+    }
+
+    // Load Nigeria data
+    fetch("{% static 'json/full.json' %}")
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            nigeriaData = data;
+            debugLog('✅ Nigeria data loaded successfully');
+        })
+        .catch(error => {
+            console.error('❌ Failed to load Nigeria data:', error);
+        });
+
+    function findStateKey(selected) {
+        if (!nigeriaData) return null;
+        if (selected in nigeriaData) return selected;
+        const s = String(selected || '').trim().toLowerCase();
+        return Object.keys(nigeriaData).find(k => String(k).trim().toLowerCase() === s) || null;
+    }
+
+    function updateLGA() {
+        const stateVal = document.getElementById('state').value;
+        const lgaSelect = document.getElementById('lga');
+        const wardSelect = document.getElementById('ward');
+
+        lgaSelect.innerHTML = '<option value="">Select LGA</option>';
+        wardSelect.innerHTML = '<option value="">Select Ward</option>';
+
+        if (!nigeriaData) {
+            debugLog('Nigeria data not loaded yet');
+            return;
+        }
+
+        const stateKey = findStateKey(stateVal);
+        if (!stateKey) {
+            debugLog('No matching state key for:', stateVal);
+            return;
+        }
+
+        const stateObj = nigeriaData[stateKey];
+
+        if (Array.isArray(stateObj) && stateObj.length && typeof stateObj[0] === 'string') {
+            stateObj.forEach(lga => {
+                const option = document.createElement('option');
+                option.value = lga;
+                option.textContent = lga;
+                lgaSelect.appendChild(option);
+            });
+            return;
+        }
+
+        if (stateObj && typeof stateObj === 'object') {
+            Object.keys(stateObj).forEach(lga => {
+                const option = document.createElement('option');
+                option.value = lga;
+                option.textContent = lga;
+                lgaSelect.appendChild(option);
+            });
+            return;
+        }
+
+      debugLog('Unsupported state data format for', stateKey, stateObj);
+    }
+
+    function updateWard() {
+        const stateVal = document.getElementById('state').value;
+        const lgaVal = document.getElementById('lga').value;
+        const wardSelect = document.getElementById('ward');
+
+        wardSelect.innerHTML = '<option value="">Select Ward</option>';
+        if (!nigeriaData) return;
+
+        const stateKey = findStateKey(stateVal);
+        if (!stateKey) return;
+
+        const stateObj = nigeriaData[stateKey];
+
+        if (stateObj && typeof stateObj === 'object' && !Array.isArray(stateObj)) {
+            const wards = stateObj[lgaVal];
+            if (Array.isArray(wards)) {
+                wards.forEach(ward => {
+                    const option = document.createElement('option');
+                    option.value = ward;
+                    option.textContent = ward;
+                    wardSelect.appendChild(option);
+                });
+            } else {
+                debugLog('No wards array found for LGA', lgaVal, wards);
+            }
+            return;
+        }
+
+        if (Array.isArray(stateObj)) {
+            const matched = stateObj.find(item => {
+                if (typeof item === 'string') return item === lgaVal;
+                if (item && typeof item === 'object') return Object.prototype.hasOwnProperty.call(item, lgaVal);
+                return false;
+            });
+
+            if (!matched) return;
+            if (typeof matched === 'object') {
+                const wards = matched[lgaVal] || [];
+                if (Array.isArray(wards)) {
+                    wards.forEach(ward => {
+                        const option = document.createElement('option');
+                        option.value = ward;
+                        option.textContent = ward;
+                        wardSelect.appendChild(option);
+                    });
+                }
+            }
+        }
+    }
+
+    // Initialize event listeners when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        const stateEl = document.getElementById('state');
+        const lgaEl = document.getElementById('lga');
+        if (stateEl) stateEl.addEventListener('change', updateLGA);
+        if (lgaEl) lgaEl.addEventListener('change', updateWard);
+    });
+  </script>
+</body>
+</html>

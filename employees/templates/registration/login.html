@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Employee Management System</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/form.css' %}">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <h1>EMPLOYEE MANAGEMENT SYSTEM</h1>
+    <nav>
+      <a href="{% url 'employee_form' %}">Add Employee</a>
+      <a href="{% url 'login' %}">Admin Login</a>
+    </nav>
+  </header>
+
+  <!-- Login Form -->
+  <main>
+    <div class="login-container">
+      <h2>Admin Login</h2>
+      
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+      
+      <form method="post">
+        {% csrf_token %}
+        
+        <label>Username
+          <input type="text" name="username" required>
+        </label>
+
+        <label>Password
+          <input type="password" name="password" required>
+        </label>
+
+        <button type="submit">Login</button>
+      </form>
+      
+      <div class="login-note">
+        <p><strong>Admin Access Only</strong></p>
+        <p>This system requires superuser privileges. Please use your admin credentials to access employee records.</p>
+        <p style="margin-top: 10px; font-size: 12px; color: #666;">
+          Need access? Contact your system administrator.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <style>
+    .login-container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 30px;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2563eb;
+    }
+
+    .alert {
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      background-color: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+      text-align: center;
+    }
+
+    .login-note {
+      margin-top: 25px;
+      padding: 15px;
+      background-color: #f0f9ff;
+      border-radius: 8px;
+      border-left: 4px solid #2563eb;
+    }
+    
+    .login-note p {
+      margin: 8px 0;
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 600px) {
+      .login-container {
+        margin: 30px 20px;
+        padding: 20px;
+      }
+    }
+  </style>
+</body>
+</html>

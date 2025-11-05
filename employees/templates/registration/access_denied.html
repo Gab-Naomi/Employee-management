@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Access Denied - Employee Management System</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <h1>EMPLOYEE MANAGEMENT SYSTEM</h1>
+        <nav>
+            <a href="{% url 'employee_form' %}">Add Employee</a>
+            <a href="{% url 'login' %}">Admin Login</a>
+        </nav>
+    </header>
+
+    <div class="success-container">
+        <div class="success-icon">🚫</div>
+        <h2 style="color: #dc2626;">Access Denied</h2>
+        <p>You do not have permission to access the employee records.</p>
+        <p style="font-size: 14px; color: #6b7280;">This area requires administrator privileges.</p>
+        <div class="success-actions">
+            <a href="{% url 'employee_form' %}" class="btn-primary">Return to Home</a>
+            <a href="{% url 'login' %}" class="btn-secondary">Try Different Account</a>
+        </div>
+    </div>
+
+    <style>
+        .success-container {
+            text-align: center;
+            margin: 80px auto;
+            background: #ffffff;
+            padding: 50px 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+        }
+
+        .success-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .success-container h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .success-container p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .success-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #4b5563, #374151);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .success-container {
+                margin: 40px 20px;
+                padding: 30px 20px;
+            }
+            
+            .success-actions {
+                flex-direction: column;
+            }
+            
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Employee - {{ employee.first_name }} {{ employee.surname }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <h1>EDIT EMPLOYEE</h1>
+        <nav>
+            <a href="{% url 'employee_form' %}">Add Employee</a>
+            <a href="{% url 'view_records' %}">View Records</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout ({{ user.username }})</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="form-page">
+        <div class="form-container">
+            <h2>Edit Employee: {{ employee.first_name }} {{ employee.surname }}</h2>
+            
+            <form method="POST" class="employee-form">
+                {% csrf_token %}
+                
+                <div class="form-section">
+                    <h3>Personal Information</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstname">First Name *</label>
+                            <input type="text" id="firstname" name="firstname" value="{{ employee.first_name }}" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="surname">Surname *</label>
+                            <input type="text" id="surname" name="surname" value="{{ employee.surname }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="othername">Other Name</label>
+                            <input type="text" id="othername" name="othername" value="{{ employee.other_name|default:'' }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="employeeid">Employee ID *</label>
+                            <input type="text" id="employeeid" name="employeeid" value="{{ employee.employee_id }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" value="{{ employee.email }}" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactnumber">Contact Number *</label>
+                            <input type="tel" id="contactnumber" name="contactnumber" value="{{ employee.contact_number }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dob">Date of Birth *</label>
+                            <input type="date" id="dob" name="dob" value="{{ employee.date_of_birth|date:'Y-m-d' }}" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="gender">Gender *</label>
+                            <select id="gender" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male" {% if employee.gender == 'Male' %}selected{% endif %}>Male</option>
+                                <option value="Female" {% if employee.gender == 'Female' %}selected{% endif %}>Female</option>
+                                <option value="Other" {% if employee.gender == 'Other' %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Address Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="address">Residential Address *</label>
+                        <textarea id="address" name="address" rows="3" required>{{ employee.address }}</textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="state">State *</label>
+                            <select id="state" name="state" required>
+                                <option value="">Select State</option>
+                                <option value="Abia" {% if employee.state == 'Abia' %}selected{% endif %}>Abia</option>
+                                <option value="Adamawa" {% if employee.state == 'Adamawa' %}selected{% endif %}>Adamawa</option>
+                                <option value="Akwa Ibom" {% if employee.state == 'Akwa Ibom' %}selected{% endif %}>Akwa Ibom</option>
+                                <option value="Anambra" {% if employee.state == 'Anambra' %}selected{% endif %}>Anambra</option>
+                                <option value="Bauchi" {% if employee.state == 'Bauchi' %}selected{% endif %}>Bauchi</option>
+                                <option value="Bayelsa" {% if employee.state == 'Bayelsa' %}selected{% endif %}>Bayelsa</option>
+                                <option value="Benue" {% if employee.state == 'Benue' %}selected{% endif %}>Benue</option>
+                                <option value="Borno" {% if employee.state == 'Borno' %}selected{% endif %}>Borno</option>
+                                <option value="Cross River" {% if employee.state == 'Cross River' %}selected{% endif %}>Cross River</option>
+                                <option value="Delta" {% if employee.state == 'Delta' %}selected{% endif %}>Delta</option>
+                                <option value="Ebonyi" {% if employee.state == 'Ebonyi' %}selected{% endif %}>Ebonyi</option>
+                                <option value="Edo" {% if employee.state == 'Edo' %}selected{% endif %}>Edo</option>
+                                <option value="Ekiti" {% if employee.state == 'Ekiti' %}selected{% endif %}>Ekiti</option>
+                                <option value="Enugu" {% if employee.state == 'Enugu' %}selected{% endif %}>Enugu</option>
+                                <option value="FCT(Abuja)" {% if employee.state == 'FCT(Abuja)' %}selected{% endif %}>FCT(Abuja)</option>
+                                <option value="Gombe" {% if employee.state == 'Gombe' %}selected{% endif %}>Gombe</option>
+                                <option value="Imo" {% if employee.state == 'Imo' %}selected{% endif %}>Imo</option>
+                                <option value="Jigawa" {% if employee.state == 'Jigawa' %}selected{% endif %}>Jigawa</option>
+                                <option value="Kaduna" {% if employee.state == 'Kaduna' %}selected{% endif %}>Kaduna</option>
+                                <option value="Kano" {% if employee.state == 'Kano' %}selected{% endif %}>Kano</option>
+                                <option value="Katsina" {% if employee.state == 'Katsina' %}selected{% endif %}>Katsina</option>
+                                <option value="Kebbi" {% if employee.state == 'Kebbi' %}selected{% endif %}>Kebbi</option>
+                                <option value="Kogi" {% if employee.state == 'Kogi' %}selected{% endif %}>Kogi</option>
+                                <option value="Kwara" {% if employee.state == 'Kwara' %}selected{% endif %}>Kwara</option>
+                                <option value="Lagos" {% if employee.state == 'Lagos' %}selected{% endif %}>Lagos</option>
+                                <option value="Nasarawa" {% if employee.state == 'Nasarawa' %}selected{% endif %}>Nasarawa</option>
+                                <option value="Niger" {% if employee.state == 'Niger' %}selected{% endif %}>Niger</option>
+                                <option value="Ogun" {% if employee.state == 'Ogun' %}selected{% endif %}>Ogun</option>
+                                <option value="Ondo" {% if employee.state == 'Ondo' %}selected{% endif %}>Ondo</option>
+                                <option value="Osun" {% if employee.state == 'Osun' %}selected{% endif %}>Osun</option>
+                                <option value="Oyo" {% if employee.state == 'Oyo' %}selected{% endif %}>Oyo</option>
+                                <option value="Plateau" {% if employee.state == 'Plateau' %}selected{% endif %}>Plateau</option>
+                                <option value="Rivers" {% if employee.state == 'Rivers' %}selected{% endif %}>Rivers</option>
+                                <option value="Sokoto" {% if employee.state == 'Sokoto' %}selected{% endif %}>Sokoto</option>
+                                <option value="Taraba" {% if employee.state == 'Taraba' %}selected{% endif %}>Taraba</option>
+                                <option value="Yobe" {% if employee.state == 'Yobe' %}selected{% endif %}>Yobe</option>
+                                <option value="Zamfara" {% if employee.state == 'Zamfara' %}selected{% endif %}>Zamfara</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lga">LGA *</label>
+                            <input type="text" id="lga" name="lga" value="{{ employee.lga }}" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="ward">Ward *</label>
+                            <input type="text" id="ward" name="ward" value="{{ employee.ward }}" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Professional Information</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="department">Department *</label>
+                            <select id="department" name="department" required>
+                                <option value="">Select Department</option>
+                                <option value="HR" {% if employee.department == 'HR' %}selected{% endif %}>HR</option>
+                                <option value="Finance" {% if employee.department == 'Finance' %}selected{% endif %}>Finance</option>
+                                <option value="IT" {% if employee.department == 'IT' %}selected{% endif %}>IT</option>
+                                <option value="Sales" {% if employee.department == 'Sales' %}selected{% endif %}>Sales</option>
+                                <option value="Marketing" {% if employee.department == 'Marketing' %}selected{% endif %}>Marketing</option>
+                                <option value="Operations" {% if employee.department == 'Operations' %}selected{% endif %}>Operations</option>
+                                <option value="Customer Service" {% if employee.department == 'Customer Service' %}selected{% endif %}>Customer Service</option>
+                                <option value="Administration" {% if employee.department == 'Administration' %}selected{% endif %}>Administration</option>
+                                <option value="Research and Development" {% if employee.department == 'Research and Development' %}selected{% endif %}>Research and Development</option>
+                                <option value="Legal" {% if employee.department == 'Legal' %}selected{% endif %}>Legal</option>
+                                <option value="Procurement" {% if employee.department == 'Procurement' %}selected{% endif %}>Procurement</option>
+                                <option value="Logistics" {% if employee.department == 'Logistics' %}selected{% endif %}>Logistics</option>
+                                <option value="Public Relations" {% if employee.department == 'Public Relations' %}selected{% endif %}>Public Relations</option>
+                                <option value="Quality Assurance" {% if employee.department == 'Quality Assurance' %}selected{% endif %}>Quality Assurance</option>
+                                <option value="Training and Development" {% if employee.department == 'Training and Development' %}selected{% endif %}>Training and Development</option>
+                                <option value="Health and Safety" {% if employee.department == 'Health and Safety' %}selected{% endif %}>Health and Safety</option>
+                                <option value="Facilities Management" {% if employee.department == 'Facilities Management' %}selected{% endif %}>Facilities Management</option>
+                                <option value="Executive Management" {% if employee.department == 'Executive Management' %}selected{% endif %}>Executive Management</option>
+                                <option value="Data Analysis" {% if employee.department == 'Data Analysis' %}selected{% endif %}>Data Analysis</option>
+                                <option value="Content Creation" {% if employee.department == 'Content Creation' %}selected{% endif %}>Content Creation</option>
+                                <option value="Social Media" {% if employee.department == 'Social Media' %}selected{% endif %}>Social Media</option>
+                                <option value="Research" {% if employee.department == 'Research' %}selected{% endif %}>Research</option>
+                                <option value="Consulting" {% if employee.department == 'Consulting' %}selected{% endif %}>Consulting</option>
+                                <option value="Data Science" {% if employee.department == 'Data Science' %}selected{% endif %}>Data Science</option>
+                                <option value="Internship" {% if employee.department == 'Internship' %}selected{% endif %}>Internship</option>
+                                <option value="Support" {% if employee.department == 'Support' %}selected{% endif %}>Support</option>
+                                <option value="Development" {% if employee.department == 'Development' %}selected{% endif %}>Development</option>
+                                <option value="Management" {% if employee.department == 'Management' %}selected{% endif %}>Management</option>
+                                <option value="Engineering" {% if employee.department == 'Engineering' %}selected{% endif %}>Engineering</option>
+                                <option value="Accounting" {% if employee.department == 'Accounting' %}selected{% endif %}>Accounting</option>
+                                <option value="Audit" {% if employee.department == 'Audit' %}selected{% endif %}>Audit</option>
+                                <option value="Customer Relations" {% if employee.department == 'Customer Relations' %}selected{% endif %}>Customer Relations</option>
+                                <option value="Technical Support" {% if employee.department == 'Technical Support' %}selected{% endif %}>Technical Support</option>
+                                <option value="Project Management" {% if employee.department == 'Project Management' %}selected{% endif %}>Project Management</option>
+                                <option value="Business Analysis" {% if employee.department == 'Business Analysis' %}selected{% endif %}>Business Analysis</option>
+                                <option value="Service Delivery" {% if employee.department == 'Service Delivery' %}selected{% endif %}>Service Delivery</option>
+                                <option value="Supply Chain" {% if employee.department == 'Supply Chain' %}selected{% endif %}>Supply Chain</option>
+                                <option value="Coordination" {% if employee.department == 'Coordination' %}selected{% endif %}>Coordination</option>
+                                <option value="Other" {% if employee.department == 'Other' %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="role">Role *</label>
+                            <select id="role" name="role" required>
+                                <option value="">Select Role</option>
+                                <option value="Admin" {% if employee.role == 'Admin' %}selected{% endif %}>Admin</option>
+                                <option value="Software Engineer" {% if employee.role == 'Software Engineer' %}selected{% endif %}>Software Engineer</option>
+                                <option value="Accountant" {% if employee.role == 'Accountant' %}selected{% endif %}>Accountant</option>
+                                <option value="HR Manager" {% if employee.role == 'HR Manager' %}selected{% endif %}>HR Manager</option>
+                                <option value="Sales Executive" {% if employee.role == 'Sales Executive' %}selected{% endif %}>Sales Executive</option>
+                                <option value="Marketing Specialist" {% if employee.role == 'Marketing Specialist' %}selected{% endif %}>Marketing Specialist</option>
+                                <option value="Customer Support" {% if employee.role == 'Customer Support' %}selected{% endif %}>Customer Support</option>
+                                <option value="IT Support" {% if employee.role == 'IT Support' %}selected{% endif %}>IT Support</option>
+                                <option value="Operations Manager" {% if employee.role == 'Operations Manager' %}selected{% endif %}>Operations Manager</option>
+                                <option value="Cyber Security" {% if employee.role == 'Cyber Security' %}selected{% endif %}>Cyber Security</option>
+                                <option value="Project Manager" {% if employee.role == 'Project Manager' %}selected{% endif %}>Project Manager</option>
+                                <option value="Business Analyst" {% if employee.role == 'Business Analyst' %}selected{% endif %}>Business Analyst</option>
+                                <option value="Customer Service" {% if employee.role == 'Customer Service' %}selected{% endif %}>Customer Service</option>
+                                <option value="Procurement Officer" {% if employee.role == 'Procurement Officer' %}selected{% endif %}>Procurement Officer</option>
+                                <option value="Logistics Coordinator" {% if employee.role == 'Logistics Coordinator' %}selected{% endif %}>Logistics Coordinator</option>
+                                <option value="Public Relations Officer" {% if employee.role == 'Public Relations Officer' %}selected{% endif %}>Public Relations Officer</option>
+                                <option value="Quality Assurance" {% if employee.role == 'Quality Assurance' %}selected{% endif %}>Quality Assurance</option>
+                                <option value="Training Coordinator" {% if employee.role == 'Training Coordinator' %}selected{% endif %}>Training Coordinator</option>
+                                <option value="Health and Safety Officer" {% if employee.role == 'Health and Safety Officer' %}selected{% endif %}>Health and Safety Officer</option>
+                                <option value="Facilities Manager" {% if employee.role == 'Facilities Manager' %}selected{% endif %}>Facilities Manager</option>
+                                <option value="Executive Assistant" {% if employee.role == 'Executive Assistant' %}selected{% endif %}>Executive Assistant</option>
+                                <option value="Data Analyst" {% if employee.role == 'Data Analyst' %}selected{% endif %}>Data Analyst</option>
+                                <option value="Content Writer" {% if employee.role == 'Content Writer' %}selected{% endif %}>Content Writer</option>
+                                <option value="Social Media Manager" {% if employee.role == 'Social Media Manager' %}selected{% endif %}>Social Media Manager</option>
+                                <option value="Researcher" {% if employee.role == 'Researcher' %}selected{% endif %}>Researcher</option>
+                                <option value="Consultant" {% if employee.role == 'Consultant' %}selected{% endif %}>Consultant</option>
+                                <option value="Data Specialist" {% if employee.role == 'Data Specialist' %}selected{% endif %}>Data Specialist</option>
+                                <option value="Cleaner" {% if employee.role == 'Cleaner' %}selected{% endif %}>Cleaner</option>
+                                <option value="Intern" {% if employee.role == 'Intern' %}selected{% endif %}>Intern</option>
+                                <option value="Other" {% if employee.role == 'Other' %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Update Employee</button>
+                    <a href="{% url 'view_records' %}" class="cancel-btn">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
