@@ -12,4 +12,7 @@ urlpatterns = [
     path('employee/delete/<int:employee_id>/', views.delete_employee, name='delete_employee'),
     path('access-denied/', views.access_denied, name='access_denied'),
     path('logout/', views.custom_logout, name='logout'),
+    path('export/csv/', views.export_employees_csv, name='export_employees_csv'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('bulk-delete/', views.bulk_delete_employees, name='bulk_delete_employees'),
 ]

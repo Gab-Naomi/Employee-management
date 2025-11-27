@@ -80,6 +80,116 @@
       background: #dc2626;
       transform: translateY(-1px);
     }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .export-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .export-btn:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .bulk-actions {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 1000;
+    }
+
+    .bulk-delete-btn {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .bulk-delete-btn:hover {
+      background: #dc2626;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .pagination-info {
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    .pagination-controls {
+      display: flex;
+      gap: 5px;
+    }
+
+    .pagination-btn, .pagination-current {
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .pagination-btn {
+      background: #f3f4f6;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+
+    .pagination-btn:hover {
+      background: #e5e7eb;
+      transform: translateY(-1px);
+    }
+
+    .pagination-current {
+      background: #2563eb;
+      color: white;
+    }
+
+    .no-records {
+      text-align: center;
+      padding: 40px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .no-records p {
+      color: #6b7280;
+      font-size: 16px;
+      margin: 0;
+    }
   </style>
 </head>
 <body>
@@ -94,6 +204,7 @@
       {% else %}
         <a href="{% url 'login' %}">View Records</a>
       {% endif %}
+      <a href="{% url 'dashboard' %}">Dashboard</a>  
     </nav>
   </header>
 
@@ -118,6 +229,15 @@
           <h4>Filters</h4>
           
           <div class="filter-group">
+            <label for="genderFilter">Gender</label>
+            <select id="genderFilter" onchange="filterRecords()">
+              <option value="">All Genders</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
             <label for="departmentFilter">Department</label>
             <select id="departmentFilter" onchange="filterRecords()">
               <option value="">All Departments</option>
@@ -125,77 +245,41 @@
               <option value="Finance">Finance</option>
               <option value="IT">IT</option>
               <option value="Sales">Sales</option>
-          <option value="Marketing">Marketing</option>
-          <option value="Operations">Operations</option>
-          <option value="Customer Service">Customer Service</option> 
-          <option value="Administration">Administration</option>
-          <option value="Research and Development">Research and Development</option>
-          <option value="Legal">Legal</option>
-          <option value="Procurement">Procurement</option>
-          <option value="Logistics">Logistics</option> 
-          <option value="Public Relations">Public Relations</option>
-          <option value="Quality Assurance">Quality Assurance</option>
-          <option value="Training and Development">Training and Development</option>
-          <option value="Health and Safety">Health and Safety</option>
-          <option value="Facilities Management">Facilities Management</option>
-          <option value="Executive Management">Executive Management</option>
-          <option value="Data Analysis">Data Analysis</option>
-          <option value="Content Creation">Content Creation</option>
-          <option value="Social Media">Social Media</option>
-          <option value="Research">Research</option>
-          <option value="Consulting">Consulting</option>
-          <option value="Data Science">Data Science</option>
-          <option value="Internship">Internship</option>
-          <option value="Support">Support</option>
-          <option value="Development">Development</option>
-          <option value="Management">Management</option>
-          <option value="Engineering">Engineering</option>
-          <option value="Accounting">Accounting</option>
-          <option value="Audit">Audit</option>
-          <option value="Customer Relations">Customer Relations</option>
-          <option value="Technical Support">Technical Support</option>
-          <option value="Project Management">Project Management</option>
-          <option value="Business Analysis">Business Analysis</option>
-          <option value="Service Delivery">Service Delivery</option>
-          <option value="Supply Chain">Supply Chain</option>
-          <option value="Coordination">Coordination</option>
-          <option value="Other">Other</option>   
-        </select>
-      </label>
-
-      <label>Role
-        <select id="role" name="role" required>
-          <option value="">Select Role</option>
-          <option value="Admin">Admin</option>
-          <option value="Software Engineer">Software Engineer</option>
-          <option value="Accountant">Accountant</option>
-          <option value="HR Manager">HR Manager</option>
-          <option value="Sales Executive">Sales Executive</option>
-          <option value="Marketing Specialist">Marketing Specialist</option>
-          <option value="Customer Support">Customer Support</option>
-          <option value="IT Support">IT Support</option>
-          <option value="Operations Manager">Operations Manager</option>
-          <option value="Cyber Security">Cyber Security</option>
-          <option value="Project Manager">Project Manager</option>
-          <option value="Business Analyst">Business Analyst</option>
-          <option value="Customer Service">Customer Service</option>
-          <option value="Procurement Officer">Procurement Officer</option>
-          <option value="Logistics Coordinator">Logistics Coordinator</option>
-          <option value="Public Relations Officer">Public Relations Officer</option>
-          <option value="Quality Assurance">Quality Assurance</option>
-          <option value="Training Coordinator">Training Coordinator</option>
-          <option value="Health and Safety Officer">Health and Safety Officer</option>
-          <option value="Facilities Manager">Facilities Manager</option>
-          <option value="Executive Assistant">Executive Assistant</option>
-          <option value="Data Analyst">Data Analyst</option>
-          <option value="Content Writer">Content Writer</option>
-          <option value="Social Media Manager">Social Media Manager</option>
-          <option value="Researcher">Researcher</option>
-          <option value="Consultant">Consultant</option>
-          <option value="Data Specialist">Data Specialist</option>
-          <option value="Cleaner">Cleaner</option>
-          <option value="Intern">Intern</option>
-          <option value="Other">Other</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Operations">Operations</option>
+              <option value="Customer Service">Customer Service</option> 
+              <option value="Administration">Administration</option>
+              <option value="Research and Development">Research and Development</option>
+              <option value="Legal">Legal</option>
+              <option value="Procurement">Procurement</option>
+              <option value="Logistics">Logistics</option> 
+              <option value="Public Relations">Public Relations</option>
+              <option value="Quality Assurance">Quality Assurance</option>
+              <option value="Training and Development">Training and Development</option>
+              <option value="Health and Safety">Health and Safety</option>
+              <option value="Facilities Management">Facilities Management</option>
+              <option value="Executive Management">Executive Management</option>
+              <option value="Data Analysis">Data Analysis</option>
+              <option value="Content Creation">Content Creation</option>
+              <option value="Social Media">Social Media</option>
+              <option value="Research">Research</option>
+              <option value="Consulting">Consulting</option>
+              <option value="Data Science">Data Science</option>
+              <option value="Internship">Internship</option>
+              <option value="Support">Support</option>
+              <option value="Development">Development</option>
+              <option value="Management">Management</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Accounting">Accounting</option>
+              <option value="Audit">Audit</option>
+              <option value="Customer Relations">Customer Relations</option>
+              <option value="Technical Support">Technical Support</option>
+              <option value="Project Management">Project Management</option>
+              <option value="Business Analysis">Business Analysis</option>
+              <option value="Service Delivery">Service Delivery</option>
+              <option value="Supply Chain">Supply Chain</option>
+              <option value="Coordination">Coordination</option>
+              <option value="Other">Other</option>   
             </select>
           </div>
 
@@ -204,35 +288,35 @@
             <select id="roleFilter" onchange="filterRecords()">
               <option value="">All Roles</option>
               <option value="Admin">Admin</option>
-          <option value="Software Engineer">Software Engineer</option>
-          <option value="Accountant">Accountant</option>
-          <option value="HR Manager">HR Manager</option>
-          <option value="Sales Executive">Sales Executive</option>
-          <option value="Marketing Specialist">Marketing Specialist</option>
-          <option value="Customer Support">Customer Support</option>
-          <option value="IT Support">IT Support</option>
-          <option value="Operations Manager">Operations Manager</option>
-          <option value="Cyber Security">Cyber Security</option>
-          <option value="Project Manager">Project Manager</option>
-          <option value="Business Analyst">Business Analyst</option>
-          <option value="Customer Service">Customer Service</option>
-          <option value="Procurement Officer">Procurement Officer</option>
-          <option value="Logistics Coordinator">Logistics Coordinator</option>
-          <option value="Public Relations Officer">Public Relations Officer</option>
-          <option value="Quality Assurance">Quality Assurance</option>
-          <option value="Training Coordinator">Training Coordinator</option>
-          <option value="Health and Safety Officer">Health and Safety Officer</option>
-          <option value="Facilities Manager">Facilities Manager</option>
-          <option value="Executive Assistant">Executive Assistant</option>
-          <option value="Data Analyst">Data Analyst</option>
-          <option value="Content Writer">Content Writer</option>
-          <option value="Social Media Manager">Social Media Manager</option>
-          <option value="Researcher">Researcher</option>
-          <option value="Consultant">Consultant</option>
-          <option value="Data Specialist">Data Specialist</option>
-          <option value="Cleaner">Cleaner</option>
-          <option value="Intern">Intern</option>
-          <option value="Other">Other</option>
+              <option value="Software Engineer">Software Engineer</option>
+              <option value="Accountant">Accountant</option>
+              <option value="HR Manager">HR Manager</option>
+              <option value="Sales Executive">Sales Executive</option>
+              <option value="Marketing Specialist">Marketing Specialist</option>
+              <option value="Customer Support">Customer Support</option>
+              <option value="IT Support">IT Support</option>
+              <option value="Operations Manager">Operations Manager</option>
+              <option value="Cyber Security">Cyber Security</option>
+              <option value="Project Manager">Project Manager</option>
+              <option value="Business Analyst">Business Analyst</option>
+              <option value="Customer Service">Customer Service</option>
+              <option value="Procurement Officer">Procurement Officer</option>
+              <option value="Logistics Coordinator">Logistics Coordinator</option>
+              <option value="Public Relations Officer">Public Relations Officer</option>
+              <option value="Quality Assurance">Quality Assurance</option>
+              <option value="Training Coordinator">Training Coordinator</option>
+              <option value="Health and Safety Officer">Health and Safety Officer</option>
+              <option value="Facilities Manager">Facilities Manager</option>
+              <option value="Executive Assistant">Executive Assistant</option>
+              <option value="Data Analyst">Data Analyst</option>
+              <option value="Content Writer">Content Writer</option>
+              <option value="Social Media Manager">Social Media Manager</option>
+              <option value="Researcher">Researcher</option>
+              <option value="Consultant">Consultant</option>
+              <option value="Data Specialist">Data Specialist</option>
+              <option value="Cleaner">Cleaner</option>
+              <option value="Intern">Intern</option>
+              <option value="Other">Other</option>
             </select>
           </div>
 
@@ -248,9 +332,20 @@
             <h2>Employee Records Dashboard</h2>
             <p class="records-subtitle"><b>Comprehensive view of all employee data</b></p>
           </div>
-          <div class="results-count">
-            📊 Showing <span id="resultsCount">0</span> of {{ records|length }} records
+          <div class="header-actions">
+            <a href="{% url 'export_employees_csv' %}" class="export-btn">📊 Export CSV</a>
+            <div class="results-count">
+              📊 Showing <span id="resultsCount">0</span> of {{ page_obj.paginator.count }} records
+            </div>
           </div>
+        </div>
+
+        <!-- Bulk Actions -->
+        <div class="bulk-actions" id="bulkActions" style="display: none;">
+          <div class="bulk-info">
+            <span id="selectedCount">0</span> employees selected
+          </div>
+          <button type="button" onclick="confirmBulkDelete()" class="bulk-delete-btn">🗑️ Delete Selected</button>
         </div>
 
         {% if records %}
@@ -258,6 +353,7 @@
           <table class="records-table" id="recordsTable">
             <thead>
               <tr>
+                <th><input type="checkbox" id="selectAll"></th>
                 <th>Photo</th>
                 <th>Employee ID</th>
                 <th>Full Name</th>
@@ -269,7 +365,8 @@
             </thead>
             <tbody>
               {% for employee in records %}
-              <tr class="record-row">
+              <tr class="record-row" data-gender="{{ employee.gender }}">
+                <td><input type="checkbox" name="employee_ids" value="{{ employee.id }}" class="employee-checkbox"></td>
                 <td>
                   {% if employee.profile_picture %}
                     <img src="{{ employee.profile_picture.url }}" alt="Profile" class="profile-picture">
@@ -302,6 +399,35 @@
             </tbody>
           </table>
         </div>
+
+        <!-- Pagination -->
+        {% if page_obj.paginator.num_pages > 1 %}
+        <div class="pagination">
+          <div class="pagination-info">
+            Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ page_obj.paginator.count }} records
+          </div>
+          <div class="pagination-controls">
+            {% if page_obj.has_previous %}
+              <a href="?page=1" class="pagination-btn">« First</a>
+              <a href="?page={{ page_obj.previous_page_number }}" class="pagination-btn">‹ Previous</a>
+            {% endif %}
+            
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+                <span class="pagination-current">{{ num }}</span>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}" class="pagination-btn">{{ num }}</a>
+              {% endif %}
+            {% endfor %}
+            
+            {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}" class="pagination-btn">Next ›</a>
+              <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-btn">Last »</a>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+
         {% else %}
           <div class="no-records">
             <p>No employee records found yet. Start by adding your first employee!</p>
@@ -318,34 +444,33 @@
     // Initialize results count
     updateResultsCount();
 
-    function searchRecords() {
-      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      filterRecords();
-    }
-
     function filterRecords() {
       const searchTerm = document.getElementById('searchInput').value.toLowerCase();
       const departmentFilter = document.getElementById('departmentFilter').value;
       const roleFilter = document.getElementById('roleFilter').value;
+      const genderFilter = document.getElementById('genderFilter').value;
 
       allRecords.forEach(row => {
         const cells = row.getElementsByTagName('td');
-        const fullName = cells[2].textContent.toLowerCase();
-        const employeeId = cells[1].textContent.toLowerCase();
-        const email = cells[5].textContent.toLowerCase();
-        const department = cells[3].textContent;
-        const role = cells[4].textContent;
+        const fullName = cells[3].textContent.toLowerCase(); // Adjusted index for checkbox column
+        const employeeId = cells[2].textContent.toLowerCase(); // Adjusted index for checkbox column
+        const email = cells[6].textContent.toLowerCase(); // Adjusted index for checkbox column
+        const department = cells[4].textContent; // Adjusted index for checkbox column
+        const role = cells[5].textContent; // Adjusted index for checkbox column
+        const gender = row.dataset.gender;
 
         const matchesSearch = !searchTerm || 
           fullName.includes(searchTerm) || 
           employeeId.includes(searchTerm) ||
           email.includes(searchTerm) ||
-          department.toLowerCase().includes(searchTerm);
+          department.toLowerCase().includes(searchTerm) ||
+          role.toLowerCase().includes(searchTerm);
         
         const matchesDepartment = !departmentFilter || department === departmentFilter;
         const matchesRole = !roleFilter || role === roleFilter;
+        const matchesGender = !genderFilter || gender === genderFilter;
 
-        if (matchesSearch && matchesDepartment && matchesRole) {
+        if (matchesSearch && matchesDepartment && matchesRole && matchesGender) {
           row.style.display = '';
         } else {
           row.style.display = 'none';
@@ -355,10 +480,24 @@
       updateResultsCount();
     }
 
+    function searchRecords() {
+      const searchBtn = document.querySelector('.search-btn');
+      const originalText = searchBtn.textContent;
+      searchBtn.textContent = 'Searching...';
+      searchBtn.disabled = true;
+      
+      setTimeout(() => {
+        filterRecords();
+        searchBtn.textContent = originalText;
+        searchBtn.disabled = false;
+      }, 500);
+    }
+
     function clearFilters() {
       document.getElementById('searchInput').value = '';
       document.getElementById('departmentFilter').value = '';
       document.getElementById('roleFilter').value = '';
+      document.getElementById('genderFilter').value = '';
       filterRecords();
     }
 
@@ -367,14 +506,77 @@
       document.getElementById('resultsCount').textContent = visibleRows;
     }
 
-    document.getElementById('searchInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        searchRecords();
-      }
+    // Real-time search
+    document.getElementById('searchInput').addEventListener('input', filterRecords);
+
+    // Bulk selection functionality
+    document.getElementById('selectAll').addEventListener('change', function() {
+      const checkboxes = document.querySelectorAll('.employee-checkbox');
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = this.checked;
+      });
+      updateBulkActions();
     });
 
+    document.querySelectorAll('.employee-checkbox').forEach(checkbox => {
+      checkbox.addEventListener('change', updateBulkActions);
+    });
+
+    function updateBulkActions() {
+      const selectedCount = document.querySelectorAll('.employee-checkbox:checked').length;
+      const bulkActions = document.getElementById('bulkActions');
+      const selectedCountSpan = document.getElementById('selectedCount');
+      
+      selectedCountSpan.textContent = selectedCount;
+      
+      if (selectedCount > 0) {
+        bulkActions.style.display = 'flex';
+      } else {
+        bulkActions.style.display = 'none';
+      }
+    }
+
+    function confirmBulkDelete() {
+      const selectedCount = document.querySelectorAll('.employee-checkbox:checked').length;
+      if (confirm(`Are you sure you want to delete ${selectedCount} employees? This action cannot be undone.`)) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = "{% url 'bulk_delete_employees' %}";
+        
+        // Get CSRF token
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+        
+        // Add selected employee IDs
+        document.querySelectorAll('.employee-checkbox:checked').forEach(checkbox => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'employee_ids';
+          input.value = checkbox.value;
+          form.appendChild(input);
+        });
+        
+        document.body.appendChild(form);
+        form.submit();
+      }
+    }
+
+    // Initialize on page load
     document.addEventListener('DOMContentLoaded', function() {
       updateResultsCount();
+      // Add CSRF token for bulk operations
+      const csrfToken = '{{ csrf_token }}';
+      if (csrfToken) {
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = csrfToken;
+        document.body.appendChild(csrfInput);
+      }
     });
   </script>
 </body>
